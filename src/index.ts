@@ -1,7 +1,8 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
 import * as dotenv from "dotenv";
-import { initializeAuth, authRouter } from "./auth.js";
+// import { initializeAuth, authRouter } from "./auth.js";
+import { initializeAuth, authRouter } from "./authPKCE.js";
 
 dotenv.config();
 
@@ -31,6 +32,7 @@ initializeAuth(app).then(() => {
 
 // Mount auth routes
 app.use("/auth", authRouter);
+// app.use("/auth", authRouter);
 
 /**
  * API Endpoint: /ask
