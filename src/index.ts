@@ -13,10 +13,7 @@ dotenv.config();
 import { OpenRouter } from "@openrouter/sdk";
 
 const openrouter = new OpenRouter({
-  apiKey:
-    process.env.OPENROUTER_API_KEY ??
-    "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",
-  // "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",
+  apiKey: process.env.OPENROUTER_API_KEY,
 });
 
 // System prompt for the AI agent

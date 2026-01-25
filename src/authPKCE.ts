@@ -8,8 +8,7 @@ const keycloakConfig = {
   url: process.env.KEYCLOAK_URL || "http://localhost:8080",
   realm: process.env.KEYCLOAK_REALM || "test-realm",
   clientId: process.env.KEYCLOAK_CLIENT_ID || "test-figma-mcp-server",
-  clientSecret:
-    process.env.KEYCLOAK_CLIENT_SECRET || "cNlhsRTGmDvfWRqmaBbUrIFCM0ZbddKt",
+  clientSecret: process.env.KEYCLOAK_CLIENT_SECRET,
   redirectUri: "http://localhost:3000/auth/callback",
 };
 
@@ -19,7 +18,7 @@ export const initializeAuth = async (app: express.Express) => {
   // Session setup
   app.use(
     session({
-      secret: process.env.SESSION_SECRET || "some-secret-key-change-me",
+      secret: process.env.SESSION_SECRET as string,
       resave: false,
       saveUninitialized: false,
       cookie: {
@@ -27,7 +26,7 @@ export const initializeAuth = async (app: express.Express) => {
         httpOnly: true,
         maxAge: 24 * 60 * 60 * 1000, // 1 day
       },
-    })
+    }),
   );
 
   try {
@@ -43,7 +42,7 @@ export const initializeAuth = async (app: express.Express) => {
       {
         // This property to ignore SSL check.
         execute: [client.allowInsecureRequests],
-      }
+      },
     );
 
     console.log("OpenID Provider discovered successfully.");
@@ -61,9 +60,8 @@ authRouter.get("/login", async (req, res) => {
   }
 
   let code_verifier: string = client.randomPKCECodeVerifier();
-  let code_challenge: string = await client.calculatePKCECodeChallenge(
-    code_verifier
-  );
+  let code_challenge: string =
+    await client.calculatePKCECodeChallenge(code_verifier);
 
   let parameters: Record<string, string> = {
     redirect_uri: keycloakConfig.redirectUri,
@@ -97,7 +95,7 @@ authRouter.get("/callback", async (req, res) => {
 
   try {
     const currentUrl = new URL(
-      req.protocol + "://" + req.get("host") + req.originalUrl
+      req.protocol + "://" + req.get("host") + req.originalUrl,
     );
 
     const state = currentUrl.searchParams.get("state") ?? "";
