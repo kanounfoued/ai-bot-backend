@@ -41,7 +41,7 @@ export const initializeAuth = async (app: express.Express) => {
       keycloakConfig.clientSecret,
       undefined,
       {
-        // This property specifically fixes OAUTH_HTTP_REQUEST_FORBIDDEN
+        // This property to ignore SSL check.
         execute: [client.allowInsecureRequests],
       }
     );
