@@ -13,7 +13,7 @@ dotenv.config();
 import { OpenRouter } from "@openrouter/sdk";
 
 const openrouter = new OpenRouter({
-  apiKey: process.env.OPENROUTER_API_KEY,
+  // apiKey: process.env.OPENROUTER_API_KEY,
 });
 
 // System prompt for the AI agent
