@@ -5,9 +5,9 @@ import express from "express";
 
 // Keycloak Configuration
 const keycloakConfig = {
-  url: process.env.KEYCLOAK_URL || "http://localhost:8080",
-  realm: process.env.KEYCLOAK_REALM || "test-realm",
-  clientId: process.env.KEYCLOAK_CLIENT_ID || "test-figma-mcp-server",
+  url: process.env.KEYCLOAK_URL,
+  realm: process.env.KEYCLOAK_REALM,
+  clientId: process.env.KEYCLOAK_CLIENT_ID as string,
   clientSecret: process.env.KEYCLOAK_CLIENT_SECRET,
   redirectUri: "http://localhost:3000/auth/callback",
 };
